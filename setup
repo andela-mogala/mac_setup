@@ -4,29 +4,18 @@ require 'fileutils'
 
 SOFTWARE_VERSIONS = {}
 
-set_software_versions
-install_homebrew
-install_brew_packages
-install_xcode_command_line_tools
-set_up_rbenv
-set_up_nvm
-
 
 def set_software_versions
   ARGV.map { |arg| arg.split("=") }.to_h.merge(SOFTWARE_VERSIONS)
 end
 
 def install_homebrew
-  system_calls "/usr/bin/ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'"
+  system_calls "/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
 end
 
 
 def install_homebrew_packages
   system_calls "brew install #{brew_packages}"
-end
-
-def install_xcode_command_line_tools
-  system_calls "xcode-select --install"
 end
 
 
@@ -60,15 +49,26 @@ end
 
 
 def system_calls(*calls)
-  exec_call = -> (call) { system `#{call}` }
+  exec_call = -> (call) do
+    begin
+      system call
+    rescue => error
+      puts error
+    end
+  end
+
   calls.each(&exec_call)
-rescue => error
-  puts error
 end
 
 
 def brew_packages
-  File.readlines('./brew_packages.txt')
-      .map { |line| line.gsub(/\n/, ' ') }
-      .inject(&:+)
+  File.readlines('./brew_formulae.txt')
+  .map { |line| line.gsub(/\n/, ' ') }
+  .inject(&:+)
 end
+
+set_software_versions
+install_homebrew
+install_homebrew_packages
+set_up_rbenv
+set_up_nvm
