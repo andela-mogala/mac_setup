@@ -5,7 +5,7 @@ other package managers.
 
 # How to use
 - Hopefully the Mac comes preinstalled with ruby and git so you can clone this repo
-- Go through the `brew_formaulae.txt` file to add or remove formulae as you see fit. All valid formulae in this file will be installed on your machine.
+- Go through the `brew_formulae.txt` file to add or remove formulae as you see fit. All valid formulae in this file will be installed on your machine.
 - Run `chmod 777 setup` command from the root directory of this repo
 - Start the script by running `./setup ruby=<ruby-version> node=<node-version>`, specifying the version of ruby and nodejs that you want to install. If you don't specify a node version, the latest version of node will be installed.
 - Once the script is done, you should have `homebrew`, `rbenv`, `ruby`, `nvm`, `nodejs` and a host of other tools installed through *homebrew* and *XCode command line tools*.
